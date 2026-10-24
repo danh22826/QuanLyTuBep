@@ -26,6 +26,27 @@ namespace QuanLyBanTuBep.UI
             MoTrang(mnuTrangChu);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.H))
+            {
+                MoTrang(mnuHangHoa);
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.N))
+            {
+                MoTrang(mnuNhapHang);
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.B))
+            {
+                MoTrang(mnuBanHang);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void DangKyMenu()
         {
             Muc(mnuTrangChu, "TRANG CHỦ", delegate { return new FrmTrangChu(); });

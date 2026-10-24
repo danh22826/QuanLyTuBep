@@ -11,7 +11,9 @@ namespace QuanLyBanTuBep.UI
         public FrmHangHoa()
         {
             InitializeComponent();
-            dieuKhien = new BangView<HangHoa>(this, new HangHoaBll(), CauHinh.HangHoa());
+            HangHoaBll bll = new HangHoaBll();
+            dieuKhien = new BangView<HangHoa>(this, bll, CauHinh.HangHoa(),
+                bll.TimKiemQuanLy, bll.DemNgungKinhDoanh);
         }
     }
 }

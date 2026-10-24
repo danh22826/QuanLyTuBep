@@ -22,6 +22,12 @@ namespace QuanLyBanTuBep.UI
         private readonly PictureBox picAnh;
         private readonly TextBox txtAnh;
         private readonly Button btnThem, btnSua, btnXoa, btnLamMoi, btnCsv, btnChonAnh;
+        private readonly Func<string, string, string, bool?, List<T>> timKiemTuyChinh;
+        private readonly Func<int> demNgungTuyChinh;
+        private ComboBox cboLocChatLieu, cboLocNuocSX, cboLocTrangThai;
+        private TextBox txtLocBaoHanh;
+        private Label lblDemNgung;
+        private bool dangNapBoLoc;
 
         private string anhTen = "";
         private string anhNguon;
@@ -29,10 +35,18 @@ namespace QuanLyBanTuBep.UI
         private List<T> dsDanhMuc;
 
         public BangView(Form form, BangBll<T> bll, CauHinhBang cfg)
+            : this(form, bll, cfg, null, null)
+        {
+        }
+
+        public BangView(Form form, BangBll<T> bll, CauHinhBang cfg,
+            Func<string, string, string, bool?, List<T>> timKiemTuyChinh, Func<int> demNgungTuyChinh)
         {
             this.form = form;
             this.bll = bll;
             this.cfg = cfg;
+            this.timKiemTuyChinh = timKiemTuyChinh;
+            this.demNgungTuyChinh = demNgungTuyChinh;
 
             lv = Tim<ListView>("lv");
             TienIch.GanLuoi(lv);
@@ -46,6 +60,14 @@ namespace QuanLyBanTuBep.UI
             btnLamMoi = Tim<Button>("btnLamMoi");
             btnCsv = Tim<Button>("btnCsv");
             btnChonAnh = TimTuyChon<Button>("btnChonAnh");
+            if (timKiemTuyChinh != null)
+            {
+                cboLocChatLieu = Tim<ComboBox>("cboLocChatLieu");
+                cboLocNuocSX = Tim<ComboBox>("cboLocNuocSX");
+                txtLocBaoHanh = Tim<TextBox>("txtLocBaoHanh");
+                cboLocTrangThai = Tim<ComboBox>("cboLocTrangThai");
+                lblDemNgung = Tim<Label>("lblDemNgung");
+            }
             btnSua.BackColor = btnThem.BackColor;
             if (cfg.DungNgungKinhDoanh) btnXoa.Text = "Ngừng KD";
 
@@ -55,8 +77,17 @@ namespace QuanLyBanTuBep.UI
             btnSua.Click += delegate { Sua(); };
             btnXoa.Click += delegate { Xoa(); };
             btnLamMoi.Click += delegate { LamMoi(); };
+            if (timKiemTuyChinh != null)
+                btnLamMoi.Click += delegate { DatLaiBoLoc(); TaiLuoi(); };
             btnCsv.Click += delegate { TienIch.XuatCsv(lv, cfg.TenFileCsv); };
             txtTim.TextChanged += delegate { ApDungLoc(); };
+            if (timKiemTuyChinh != null)
+            {
+                cboLocChatLieu.SelectedValueChanged += delegate { if (!dangNapBoLoc) TaiLuoiAnToan(); };
+                cboLocNuocSX.SelectedValueChanged += delegate { if (!dangNapBoLoc) TaiLuoiAnToan(); };
+                cboLocTrangThai.SelectedValueChanged += delegate { if (!dangNapBoLoc) TaiLuoiAnToan(); };
+                txtLocBaoHanh.TextChanged += delegate { if (!dangNapBoLoc) TaiLuoiAnToan(); };
+            }
             lv.SelectedIndexChanged += Lv_Chon;
             if (btnChonAnh != null) btnChonAnh.Click += delegate { ChonAnh(); };
 
@@ -112,6 +143,7 @@ namespace QuanLyBanTuBep.UI
             try
             {
                 NapCombo();
+                NapBoLoc();
                 TaiLuoi();
                 LamMoi();
             }
@@ -139,9 +171,96 @@ namespace QuanLyBanTuBep.UI
 
         private void TaiLuoi()
         {
-            dsDanhMuc = bll.LayDanhSach();
+            if (timKiemTuyChinh == null)
+            {
+                dsDanhMuc = bll.LayDanhSach();
+            }
+            else
+            {
+                dsDanhMuc = timKiemTuyChinh(
+                    MaBoLoc(cboLocChatLieu), MaBoLoc(cboLocNuocSX), txtLocBaoHanh.Text.Trim(),
+                    TrangThaiBoLoc());
+                if (demNgungTuyChinh != null)
+                    lblDemNgung.Text = "Có " + demNgungTuyChinh() + " hàng đang ngừng kinh doanh";
+            }
             ApDungLoc();
             lv.SelectedItems.Clear();
+        }
+
+        private void TaiLuoiAnToan()
+        {
+            try { TaiLuoi(); }
+            catch (Exception ex) { TienIch.XuLyLoi(ex); }
+        }
+
+        private static string MaBoLoc(ComboBox cbo)
+        {
+            return cbo.SelectedValue == null || cbo.SelectedValue is DBNull
+                ? null
+                : Convert.ToString(cbo.SelectedValue);
+        }
+
+        private bool? TrangThaiBoLoc()
+        {
+            string ma = MaBoLoc(cboLocTrangThai);
+            if (ma == "0") return false;
+            if (ma == "1") return true;
+            return null;
+        }
+
+        private void NapBoLoc()
+        {
+            if (timKiemTuyChinh == null) return;
+            dangNapBoLoc = true;
+            try
+            {
+                List<LuaChon> chatLieu = new List<LuaChon> { new LuaChon(null, "Tất cả") };
+                chatLieu.AddRange(bll.LayLuaChon("MaChatLieu"));
+                cboLocChatLieu.DisplayMember = "Ten";
+                cboLocChatLieu.ValueMember = "Ma";
+                cboLocChatLieu.DataSource = chatLieu;
+                cboLocChatLieu.SelectedIndex = 0;
+
+                List<LuaChon> nuocSX = new List<LuaChon> { new LuaChon(null, "Tất cả") };
+                nuocSX.AddRange(bll.LayLuaChon("MaNuocSX"));
+                cboLocNuocSX.DisplayMember = "Ten";
+                cboLocNuocSX.ValueMember = "Ma";
+                cboLocNuocSX.DataSource = nuocSX;
+                cboLocNuocSX.SelectedIndex = 0;
+
+                cboLocTrangThai.DisplayMember = "Ten";
+                cboLocTrangThai.ValueMember = "Ma";
+                cboLocTrangThai.DataSource = new List<LuaChon>
+                {
+                    new LuaChon("0", "Đang kinh doanh"),
+                    new LuaChon("1", "Ngừng kinh doanh"),
+                    new LuaChon(null, "Tất cả")
+                };
+                cboLocTrangThai.SelectedValue = "0";
+                txtLocBaoHanh.Clear();
+            }
+            finally
+            {
+                dangNapBoLoc = false;
+            }
+        }
+
+        private void DatLaiBoLoc()
+        {
+            if (timKiemTuyChinh == null) return;
+            dangNapBoLoc = true;
+            try
+            {
+                txtTim.Clear();
+                cboLocChatLieu.SelectedIndex = 0;
+                cboLocNuocSX.SelectedIndex = 0;
+                txtLocBaoHanh.Clear();
+                cboLocTrangThai.SelectedValue = "0";
+            }
+            finally
+            {
+                dangNapBoLoc = false;
+            }
         }
 
         private void ApDungLoc()
@@ -157,12 +276,32 @@ namespace QuanLyBanTuBep.UI
             })).ToList();
 
             TienIch.NapLuoi(lv, ketQua, cfg.CotLuoi);
+            if (cfg.DungNgungKinhDoanh)
+            {
+                int cotTrangThai = Array.IndexOf(cfg.CotLuoi, "TrangThai");
+                foreach (ListViewItem item in lv.Items)
+                {
+                    HangHoa hang = item.Tag as HangHoa;
+                    if (hang == null) continue;
+                    if (cotTrangThai >= 0 && cotTrangThai < item.SubItems.Count)
+                        item.SubItems[cotTrangThai].Text = hang.NgungKinhDoanh ? "Ngừng" : "Đang bán";
+                    if (hang.NgungKinhDoanh) item.ForeColor = Color.Gray;
+                }
+            }
             lblDem.Text = ketQua.Count + " dòng";
         }
 
         private void Lv_Chon(object sender, EventArgs e)
         {
-            if (lv.SelectedItems.Count == 0) return;
+            if (lv.SelectedItems.Count == 0)
+            {
+                if (cfg.DungNgungKinhDoanh)
+                {
+                    btnXoa.Text = "Ngừng kinh doanh";
+                    btnXoa.Enabled = false;
+                }
+                return;
+            }
             try
             {
                 T dong = (T)lv.SelectedItems[0].Tag;
@@ -339,9 +478,9 @@ namespace QuanLyBanTuBep.UI
                 btnLamMoi.ForeColor = mauChu;
                 if (cfg.DungNgungKinhDoanh)
                 {
-                    Truong t = cfg.DsTruong.FirstOrDefault(x => x.ThuocTinh == "NgungKinhDoanh");
-                    CheckBox chk = t == null ? null : o[t] as CheckBox;
-                    btnXoa.Text = sua && chk != null && chk.Checked ? "Kinh doanh lại" : "Ngừng KD";
+                    HangHoa hang = lv.SelectedItems.Count == 0 ? null : lv.SelectedItems[0].Tag as HangHoa;
+                    btnXoa.Text = hang != null && hang.NgungKinhDoanh ? "Kinh doanh lại" : "Ngừng kinh doanh";
+                    btnXoa.Enabled = hang != null;
                 }
             }
             else

@@ -400,7 +400,8 @@ GO
 CREATE OR ALTER PROCEDURE sp_TimKiemSanPham
     @MaChatLieu NVARCHAR(20) = NULL,
     @MaNuocSX NVARCHAR(20) = NULL,
-    @ThoiGianBaoHanh NVARCHAR(50) = NULL
+    @ThoiGianBaoHanh NVARCHAR(50) = NULL,
+    @NgungKinhDoanh BIT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -425,7 +426,9 @@ BEGIN
     LEFT JOIN NuocSanXuat nsx ON h.MaNuocSX = nsx.MaNuocSX
     WHERE (@MaChatLieu IS NULL OR @MaChatLieu = '' OR h.MaChatLieu = @MaChatLieu)
       AND (@MaNuocSX IS NULL OR @MaNuocSX = '' OR h.MaNuocSX = @MaNuocSX)
-      AND (@ThoiGianBaoHanh IS NULL OR @ThoiGianBaoHanh = '' OR h.ThoiGianBaoHanh LIKE N'%' + @ThoiGianBaoHanh + '%');
+      AND (@ThoiGianBaoHanh IS NULL OR @ThoiGianBaoHanh = '' OR h.ThoiGianBaoHanh LIKE N'%' + @ThoiGianBaoHanh + '%')
+      AND (@NgungKinhDoanh IS NULL OR h.NgungKinhDoanh = @NgungKinhDoanh)
+    ORDER BY h.NgungKinhDoanh, h.MaHang;
 END;
 GO
 
@@ -1291,7 +1294,8 @@ GO
 CREATE OR ALTER PROCEDURE dbo.sp_TimKiemSanPham
     @MaChatLieu NVARCHAR(20) = NULL,
     @MaNuocSX NVARCHAR(20) = NULL,
-    @ThoiGianBaoHanh NVARCHAR(50) = NULL
+    @ThoiGianBaoHanh NVARCHAR(50) = NULL,
+    @NgungKinhDoanh BIT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -1316,7 +1320,9 @@ BEGIN
     LEFT JOIN dbo.NuocSanXuat nsx ON h.MaNuocSX = nsx.MaNuocSX
     WHERE (@MaChatLieu IS NULL OR @MaChatLieu = '' OR h.MaChatLieu = @MaChatLieu)
       AND (@MaNuocSX IS NULL OR @MaNuocSX = '' OR h.MaNuocSX = @MaNuocSX)
-      AND (@ThoiGianBaoHanh IS NULL OR @ThoiGianBaoHanh = '' OR h.ThoiGianBaoHanh LIKE N'%' + @ThoiGianBaoHanh + '%');
+      AND (@ThoiGianBaoHanh IS NULL OR @ThoiGianBaoHanh = '' OR h.ThoiGianBaoHanh LIKE N'%' + @ThoiGianBaoHanh + '%')
+      AND (@NgungKinhDoanh IS NULL OR h.NgungKinhDoanh = @NgungKinhDoanh)
+    ORDER BY h.NgungKinhDoanh, h.MaHang;
 END;
 GO
 -- >>> KET THUC UPGRADE F <<<

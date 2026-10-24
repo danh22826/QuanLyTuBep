@@ -84,6 +84,16 @@ namespace QuanLyBanTuBep.BLL
                 throw new NghiepVuException("Mặt hàng không còn tồn tại.");
         }
 
+        public List<HangHoa> TimKiemQuanLy(string maChatLieu, string maNuocSX, string baoHanh, bool? ngungKinhDoanh)
+        {
+            return dal.TimKiemQuanLy(maChatLieu, maNuocSX, baoHanh, ngungKinhDoanh);
+        }
+
+        public int DemNgungKinhDoanh()
+        {
+            return dal.DemNgungKinhDoanh();
+        }
+
         internal static string ThuocTinhBiDoi(HangHoa cu, HangHoa moi)
         {
             if (cu == null || moi == null) return null;

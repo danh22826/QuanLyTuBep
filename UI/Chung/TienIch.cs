@@ -139,6 +139,7 @@ namespace QuanLyBanTuBep.UI
                 for (int r = 0; r < dong.Count; r++)
                 {
                     ListViewItem item = new ListViewItem(DinhDangO(dong[r][0], kieu[0]));
+                    item.ForeColor = Theme.ChuChinh;
                     for (int c = 1; c < tieuDe.Length; c++) item.SubItems.Add(DinhDangO(dong[r][c], kieu[c]));
                     item.Tag = tags[r]; items.Add(item);
                 }
@@ -285,7 +286,7 @@ namespace QuanLyBanTuBep.UI
 
             Rectangle vung = new Rectangle(e.Bounds.X + LeO, e.Bounds.Y, e.Bounds.Width - 2 * LeO, e.Bounds.Height);
             HorizontalAlignment canh = e.ColumnIndex == 0 ? HorizontalAlignment.Left : e.Header.TextAlign;
-            TextRenderer.DrawText(e.Graphics, e.SubItem.Text, Theme.ChuMenu, vung, Theme.ChuChinh, CoCanh(canh));
+            TextRenderer.DrawText(e.Graphics, e.SubItem.Text, Theme.ChuMenu, vung, e.Item.ForeColor, CoCanh(canh));
         }
 
         public static void ChonGiaTri(ComboBox cbo, object giaTri)

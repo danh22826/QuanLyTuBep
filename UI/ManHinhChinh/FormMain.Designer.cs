@@ -162,7 +162,6 @@
             this.menuChinh.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
                 this.mnuTrangChu,
                 this.mnuDanhMuc,
-                this.mnuGiaoDich,
                 this.mnuTraCuu,
                 this.mnuHeThong});
             this.menuChinh.Name = "menuChinh";
@@ -177,7 +176,6 @@
             this.mnuTrangChu.Click += new System.EventHandler(this.mnuMuc_Click);
 
             this.mnuDanhMuc.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.mnuHangHoa,
                 this.mnuNhanVien,
                 this.mnuKhachHang,
                 this.mnuNhaCungCap,
@@ -193,7 +191,6 @@
 
             this.mnuHangHoa.Name = "mnuHangHoa";
             this.mnuHangHoa.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.mnuHangHoa.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.mnuHangHoa.Text = "Hàng hoá";
             this.mnuHangHoa.Click += new System.EventHandler(this.mnuMuc_Click);
 
@@ -249,13 +246,11 @@
 
             this.mnuNhapHang.Name = "mnuNhapHang";
             this.mnuNhapHang.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.mnuNhapHang.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.mnuNhapHang.Text = "Nhập hàng";
             this.mnuNhapHang.Click += new System.EventHandler(this.mnuMuc_Click);
 
             this.mnuBanHang.Name = "mnuBanHang";
             this.mnuBanHang.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.mnuBanHang.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
             this.mnuBanHang.Text = "Bán hàng";
             this.mnuBanHang.Click += new System.EventHandler(this.mnuMuc_Click);
 

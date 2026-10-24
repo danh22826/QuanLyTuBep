@@ -22,8 +22,17 @@ namespace QuanLyBanTuBep.UI
             this.pnlPhai = new System.Windows.Forms.Panel();
             this.btnCsv = new System.Windows.Forms.Button();
             this.lblDem = new System.Windows.Forms.Label();
+            this.lblDemNgung = new System.Windows.Forms.Label();
             this.txtTim = new System.Windows.Forms.TextBox();
             this.lblTim = new System.Windows.Forms.Label();
+            this.lblLocChatLieu = new System.Windows.Forms.Label();
+            this.cboLocChatLieu = new System.Windows.Forms.ComboBox();
+            this.lblLocNuocSX = new System.Windows.Forms.Label();
+            this.cboLocNuocSX = new System.Windows.Forms.ComboBox();
+            this.lblLocBaoHanh = new System.Windows.Forms.Label();
+            this.txtLocBaoHanh = new System.Windows.Forms.TextBox();
+            this.lblLocTrangThai = new System.Windows.Forms.Label();
+            this.cboLocTrangThai = new System.Windows.Forms.ComboBox();
             this.pnlNhap = new System.Windows.Forms.Panel();
             this.pnlNut = new System.Windows.Forms.Panel();
             this.btnThem = new System.Windows.Forms.Button();
@@ -84,12 +93,21 @@ namespace QuanLyBanTuBep.UI
 
             this.pnlTim.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTim.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
-            this.pnlTim.Size = new System.Drawing.Size(0, 56);
+            this.pnlTim.Size = new System.Drawing.Size(0, 92);
             this.pnlTim.Name = "pnlTim";
             this.pnlTim.Controls.Add(this.pnlPhai);
             this.pnlTim.Controls.Add(this.lblDem);
+            this.pnlTim.Controls.Add(this.lblDemNgung);
             this.pnlTim.Controls.Add(this.txtTim);
             this.pnlTim.Controls.Add(this.lblTim);
+            this.pnlTim.Controls.Add(this.lblLocChatLieu);
+            this.pnlTim.Controls.Add(this.cboLocChatLieu);
+            this.pnlTim.Controls.Add(this.lblLocNuocSX);
+            this.pnlTim.Controls.Add(this.cboLocNuocSX);
+            this.pnlTim.Controls.Add(this.lblLocBaoHanh);
+            this.pnlTim.Controls.Add(this.txtLocBaoHanh);
+            this.pnlTim.Controls.Add(this.lblLocTrangThai);
+            this.pnlTim.Controls.Add(this.cboLocTrangThai);
 
             this.pnlPhai.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlPhai.Size = new System.Drawing.Size(150, 0);
@@ -111,21 +129,82 @@ namespace QuanLyBanTuBep.UI
             this.lblDem.AutoSize = true;
             this.lblDem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDem.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.lblDem.Location = new System.Drawing.Point(410, 19);
+            this.lblDem.Location = new System.Drawing.Point(0, 13);
             this.lblDem.Text = "";
             this.lblDem.Name = "lblDem";
 
+            this.lblDemNgung.AutoSize = true;
+            this.lblDemNgung.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDemNgung.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblDemNgung.Location = new System.Drawing.Point(100, 13);
+            this.lblDemNgung.Text = "Có 0 hàng đang ngừng kinh doanh";
+            this.lblDemNgung.Name = "lblDemNgung";
+
             this.txtTim.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTim.Location = new System.Drawing.Point(72, 14);
-            this.txtTim.Size = new System.Drawing.Size(320, 29);
+            this.txtTim.Location = new System.Drawing.Point(72, 48);
+            this.txtTim.Size = new System.Drawing.Size(120, 29);
             this.txtTim.Name = "txtTim";
 
             this.lblTim.AutoSize = true;
             this.lblTim.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTim.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.lblTim.Location = new System.Drawing.Point(0, 19);
+            this.lblTim.Location = new System.Drawing.Point(0, 57);
             this.lblTim.Text = "Tìm kiếm";
             this.lblTim.Name = "lblTim";
+
+            this.lblLocChatLieu.AutoSize = true;
+            this.lblLocChatLieu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocChatLieu.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblLocChatLieu.Location = new System.Drawing.Point(198, 57);
+            this.lblLocChatLieu.Text = "Chất liệu";
+            this.lblLocChatLieu.Name = "lblLocChatLieu";
+
+            this.cboLocChatLieu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboLocChatLieu.Location = new System.Drawing.Point(258, 48);
+            this.cboLocChatLieu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocChatLieu.FormattingEnabled = true;
+            this.cboLocChatLieu.Size = new System.Drawing.Size(115, 28);
+            this.cboLocChatLieu.Name = "cboLocChatLieu";
+
+            this.lblLocNuocSX.AutoSize = true;
+            this.lblLocNuocSX.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocNuocSX.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblLocNuocSX.Location = new System.Drawing.Point(380, 57);
+            this.lblLocNuocSX.Text = "Nước SX";
+            this.lblLocNuocSX.Name = "lblLocNuocSX";
+
+            this.cboLocNuocSX.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboLocNuocSX.Location = new System.Drawing.Point(443, 48);
+            this.cboLocNuocSX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocNuocSX.FormattingEnabled = true;
+            this.cboLocNuocSX.Size = new System.Drawing.Size(110, 28);
+            this.cboLocNuocSX.Name = "cboLocNuocSX";
+
+            this.lblLocBaoHanh.AutoSize = true;
+            this.lblLocBaoHanh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocBaoHanh.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblLocBaoHanh.Location = new System.Drawing.Point(560, 57);
+            this.lblLocBaoHanh.Text = "Bảo hành";
+            this.lblLocBaoHanh.Name = "lblLocBaoHanh";
+
+            this.txtLocBaoHanh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLocBaoHanh.Location = new System.Drawing.Point(623, 48);
+            this.txtLocBaoHanh.Size = new System.Drawing.Size(65, 27);
+            this.txtLocBaoHanh.Name = "txtLocBaoHanh";
+
+            this.lblLocTrangThai.AutoSize = true;
+            this.lblLocTrangThai.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocTrangThai.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblLocTrangThai.Location = new System.Drawing.Point(696, 57);
+            this.lblLocTrangThai.Text = "Trạng thái";
+            this.lblLocTrangThai.Name = "lblLocTrangThai";
+
+            this.cboLocTrangThai.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboLocTrangThai.Location = new System.Drawing.Point(766, 48);
+            this.cboLocTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocTrangThai.FormattingEnabled = true;
+            this.cboLocTrangThai.Size = new System.Drawing.Size(190, 28);
+            this.cboLocTrangThai.Name = "cboLocTrangThai";
 
             this.pnlNhap.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlNhap.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
@@ -175,7 +254,7 @@ namespace QuanLyBanTuBep.UI
             this.btnXoa.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXoa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnXoa.Location = new System.Drawing.Point(272, 0);
-            this.btnXoa.Size = new System.Drawing.Size(120, 36);
+            this.btnXoa.Size = new System.Drawing.Size(145, 36);
             this.btnXoa.Text = "Xoá";
             this.btnXoa.UseVisualStyleBackColor = false;
             this.btnXoa.Name = "btnXoa";
@@ -186,7 +265,7 @@ namespace QuanLyBanTuBep.UI
             this.btnLamMoi.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.btnLamMoi.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLamMoi.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLamMoi.Location = new System.Drawing.Point(400, 0);
+            this.btnLamMoi.Location = new System.Drawing.Point(425, 0);
             this.btnLamMoi.Size = new System.Drawing.Size(120, 36);
             this.btnLamMoi.Text = "Làm mới";
             this.btnLamMoi.UseVisualStyleBackColor = false;
@@ -460,8 +539,17 @@ namespace QuanLyBanTuBep.UI
         private System.Windows.Forms.Panel pnlPhai;
         private System.Windows.Forms.Button btnCsv;
         private System.Windows.Forms.Label lblDem;
+        private System.Windows.Forms.Label lblDemNgung;
         private System.Windows.Forms.TextBox txtTim;
         private System.Windows.Forms.Label lblTim;
+        private System.Windows.Forms.Label lblLocChatLieu;
+        private System.Windows.Forms.ComboBox cboLocChatLieu;
+        private System.Windows.Forms.Label lblLocNuocSX;
+        private System.Windows.Forms.ComboBox cboLocNuocSX;
+        private System.Windows.Forms.Label lblLocBaoHanh;
+        private System.Windows.Forms.TextBox txtLocBaoHanh;
+        private System.Windows.Forms.Label lblLocTrangThai;
+        private System.Windows.Forms.ComboBox cboLocTrangThai;
         private System.Windows.Forms.Panel pnlNhap;
         private System.Windows.Forms.Panel pnlNut;
         private System.Windows.Forms.Button btnThem;

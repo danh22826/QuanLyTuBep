@@ -67,6 +67,20 @@ namespace QuanLyBanTuBep.DAL
                 Db.P("@MaChatLieu", maChatLieu), Db.P("@MaNuocSX", maNuocSX), Db.P("@ThoiGianBaoHanh", baoHanh)));
         }
 
+        public List<HangHoa> TimKiemQuanLy(string maChatLieu, string maNuocSX, string baoHanh, bool? ngungKinhDoanh)
+        {
+            return DocDuLieu.DanhSach<HangHoa>(Db.Proc("sp_TimKiemSanPham",
+                Db.P("@MaChatLieu", maChatLieu), Db.P("@MaNuocSX", maNuocSX),
+                Db.P("@ThoiGianBaoHanh", baoHanh), Db.P("@NgungKinhDoanh", ngungKinhDoanh)));
+        }
+
+        public int DemNgungKinhDoanh()
+        {
+            return System.Convert.ToInt32(Db.Scalar(
+                "SELECT COUNT(*) FROM DMHangHoa WHERE NgungKinhDoanh = @ngung",
+                Db.P("@ngung", true)));
+        }
+
         public List<HangHoa> TonDuoi(int nguong)
         {
             return DocDuLieu.DanhSach<HangHoa>(Db.Query(

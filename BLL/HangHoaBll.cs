@@ -18,6 +18,22 @@ namespace QuanLyBanTuBep.BLL
         public override string TruongKhoa { get { return "MaHang"; } }
         public override string SinhMaMoi() { return dal.SinhMaTuDong(); }
 
+        public override List<HangHoa> LayDanhSach()
+        {
+            PhanQuyen.YeuCau(Quyen.XemTonKho);
+            List<HangHoa> ds = dal.LayTatCa();
+            AnGiaVonNeuCan(ds);
+            return ds;
+        }
+
+        public override HangHoa LayTheoMa(string ma)
+        {
+            PhanQuyen.YeuCau(Quyen.XemTonKho);
+            HangHoa hang = dal.TimTheoMa(ma);
+            if (hang != null && !PhanQuyen.CoQuyen(Quyen.XemGiaVon)) hang.GiaNhap = 0;
+            return hang;
+        }
+
         protected override void KiemTra(HangHoa x, bool themMoi)
         {
             KiemTraDuLieu.Ma(x.MaHang, "Mã hàng", "MaHang");
@@ -78,6 +94,7 @@ namespace QuanLyBanTuBep.BLL
 
         public void DoiTrangThaiKinhDoanh(string ma, bool ngung)
         {
+            PhanQuyen.YeuCau(Quyen.QuanLyHangHoa);
             HangHoa hang = LayTheoMa(ma);
             if (hang == null) throw new NghiepVuException("Không tìm thấy mặt hàng cần cập nhật.");
             if (dal.DatTrangThai(ma, ngung) == 0)
@@ -86,12 +103,22 @@ namespace QuanLyBanTuBep.BLL
 
         public List<HangHoa> TimKiemQuanLy(string maChatLieu, string maNuocSX, string baoHanh, bool? ngungKinhDoanh)
         {
-            return dal.TimKiemQuanLy(maChatLieu, maNuocSX, baoHanh, ngungKinhDoanh);
+            PhanQuyen.YeuCau(Quyen.QuanLyHangHoa);
+            List<HangHoa> ds = dal.TimKiemQuanLy(maChatLieu, maNuocSX, baoHanh, ngungKinhDoanh);
+            AnGiaVonNeuCan(ds);
+            return ds;
         }
 
         public int DemNgungKinhDoanh()
         {
+            PhanQuyen.YeuCau(Quyen.QuanLyHangHoa);
             return dal.DemNgungKinhDoanh();
+        }
+
+        private static void AnGiaVonNeuCan(IEnumerable<HangHoa> ds)
+        {
+            if (PhanQuyen.CoQuyen(Quyen.XemGiaVon)) return;
+            foreach (HangHoa hang in ds) hang.GiaNhap = 0;
         }
 
         internal static string ThuocTinhBiDoi(HangHoa cu, HangHoa moi)

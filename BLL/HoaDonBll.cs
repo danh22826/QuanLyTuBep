@@ -40,16 +40,19 @@ namespace QuanLyBanTuBep.BLL
 
         public void BoDong()
         {
+            YeuCauSuDung();
             dong.Clear();
         }
 
         public bool XoaDong(IChiTietHoaDon d)
         {
+            YeuCauSuDung();
             return d != null && dong.Remove(d);
         }
 
         public string ThemDong(string so, HangHoa hang, int soLuong, decimal donGia, double giamGia)
         {
+            YeuCauSuDung();
             if (hang == null) return "Vui lòng chọn mặt hàng.";
             if (dong.Any(d => string.Equals(d.MaHang, hang.MaHang, StringComparison.OrdinalIgnoreCase)))
                 return "Mặt hàng này đã có trong hoá đơn. Hãy xoá dòng cũ trước nếu muốn đổi số lượng.";
@@ -72,18 +75,24 @@ namespace QuanLyBanTuBep.BLL
 
         public IList<LuaChon> DanhSachNhanVien()
         {
-            return nhanVienDal.LayTatCa().Select(n => new LuaChon(n.MaNV, n.TenHienThi)).ToList();
+            PhienDangNhap.YeuCauHieuLuc();
+            YeuCauSuDung();
+            return nhanVienDal.LayTatCa().Select(n => new LuaChon(n.MaNV, n.TenNV)).ToList();
         }
 
         public IList<HangHoa> DanhSachHangHoa()
         {
-            return hangHoaDal.LayDangKinhDoanh();
+            YeuCauSuDung();
+            IList<HangHoa> ds = hangHoaDal.LayDangKinhDoanh();
+            if (!PhanQuyen.CoQuyen(Quyen.XemGiaVon)) foreach (HangHoa h in ds) h.GiaNhap = 0;
+            return ds;
         }
 
         // ---------- Xem / lưu / xoá ----------
 
         public IHoaDon Xem(string so)
         {
+            YeuCauDoc();
             List<IChiTietHoaDon> ct = new List<IChiTietHoaDon>();
             IHoaDon hd = LayDau(so, ct);
             dong.Clear();
@@ -93,6 +102,9 @@ namespace QuanLyBanTuBep.BLL
 
         public void Luu(string so, DateTime ngay, string maNV, string maDoiTac, string tenDoiTac = null, string diaChiDoiTac = null, string dienThoaiDoiTac = null)
         {
+            ThongTinPhien phien = PhienDangNhap.YeuCauHieuLuc();
+            YeuCauTaoMoi();
+            maNV = phien.MaNV;
             so = (so ?? "").Trim();
             if (so.Length == 0) throw new NghiepVuException("Chưa có số hoá đơn.", "So");
             if (so.Length > 20 || !MauSo.IsMatch(so))
@@ -131,10 +143,29 @@ namespace QuanLyBanTuBep.BLL
 
         public void Xoa(string so)
         {
+            PhanQuyen.YeuCau(Quyen.QuanLyTaiKhoan);
             if (string.IsNullOrWhiteSpace(so)) throw new NghiepVuException("Chưa có số hoá đơn cần xoá.");
             KetQuaGhiHoaDon kq = XoaDb(so);
             if (!kq.HoaDonTonTai) throw new NghiepVuException("Hoá đơn \"" + so + "\" không còn tồn tại.");
             if (!kq.DaGhi) BaoLoiXoa(kq, so);
+        }
+
+        public void YeuCauSuDung()
+        {
+            if (Loai == LoaiHoaDon.Nhap) PhanQuyen.YeuCau(Quyen.NhapHang);
+            else PhanQuyen.YeuCau(Quyen.BanHang);
+        }
+
+        public void YeuCauDoc()
+        {
+            if (Loai == LoaiHoaDon.Nhap) PhanQuyen.YeuCau(Quyen.NhapHang);
+            else PhanQuyen.YeuCau(Quyen.XemLichSuBan);
+        }
+
+        private void YeuCauTaoMoi()
+        {
+            if (Loai == LoaiHoaDon.Nhap) PhanQuyen.YeuCau(Quyen.NhapHang);
+            else PhanQuyen.YeuCau(Quyen.BanHang);
         }
 
         protected static string DanhSachThieu(IEnumerable<HangThieuTon> ds, string dongTieuDe, string dongMau)

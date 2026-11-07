@@ -57,7 +57,12 @@ namespace QuanLyBanTuBep.UI
             }
 
             btnXem.Click += delegate { ChayBaoCao(); };
-            btnCsv.Click += delegate { TienIch.XuatCsv(lv, cfg.TenFile); };
+            btnCsv.Click += delegate
+            {
+                if (cfg.TenFile == "TimKiemSanPham") PhanQuyen.YeuCau(Quyen.TimSanPham);
+                else PhanQuyen.YeuCau(Quyen.BaoCaoDoanhThu);
+                TienIch.XuatCsv(lv, cfg.TenFile);
+            };
             form.Load += delegate { KhoiTao(); };
         }
 

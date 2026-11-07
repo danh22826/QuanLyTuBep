@@ -11,6 +11,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmTrangChu()
         {
+            PhanQuyen.YeuCau(Quyen.XemTrangChu);
             InitializeComponent();
             TienIch.GanLuoi(lvSapHet);
             TienIch.GanLuoi(lvGanDay);

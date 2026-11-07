@@ -20,11 +20,13 @@ namespace QuanLyBanTuBep.BLL
 
         public override IList<IHoaDon> DanhSach()
         {
+            PhanQuyen.YeuCau(Quyen.XemLichSuBan);
             return dal.LayTatCa().Cast<IHoaDon>().ToList();
         }
 
         public override IList<LuaChon> DanhSachDoiTac()
         {
+            PhanQuyen.YeuCau(Quyen.BanHang);
             return khachBll.DanhSachChonBanHang();
         }
 

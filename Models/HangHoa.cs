@@ -5,6 +5,7 @@ namespace QuanLyBanTuBep.Models
 {
     public class HangHoa
     {
+        private string tenKichThuoc;
         [DisplayName("Mã hàng")]
         public string MaHang { get; set; }
 
@@ -17,7 +18,11 @@ namespace QuanLyBanTuBep.Models
         public string MaNuocSX { get; set; }
 
         [DisplayName("Kích thước")]
-        public string TenKichThuoc { get; set; }
+        public string TenKichThuoc
+        {
+            get { return tenKichThuoc; }
+            set { tenKichThuoc = KichThuoc.TenHienThiChieuRong(value); }
+        }
 
         [DisplayName("Chất liệu")]
         public string TenChatLieu { get; set; }

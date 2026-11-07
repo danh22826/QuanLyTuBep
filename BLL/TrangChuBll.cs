@@ -11,8 +11,8 @@ namespace QuanLyBanTuBep.BLL
         private readonly HangHoaDal hang = new HangHoaDal();
         private readonly HoaDonBanDal ban = new HoaDonBanDal();
 
-        public TongQuan TongQuan() { return baoCao.TongQuan(); }
-        public List<HangHoa> HangSapHet() { return hang.TonDuoi(NguongSapHet); }
-        public List<HoaDonBan> HoaDonGanDay() { return ban.LayGanDay(8); }
+        public TongQuan TongQuan() { PhanQuyen.YeuCau(Quyen.XemTrangChu); return baoCao.TongQuan(); }
+        public List<HangHoa> HangSapHet() { PhanQuyen.YeuCau(Quyen.XemTonKho); return hang.TonDuoi(NguongSapHet); }
+        public List<HoaDonBan> HoaDonGanDay() { PhanQuyen.YeuCau(Quyen.XemLichSuBan); return ban.LayGanDay(8); }
     }
 }

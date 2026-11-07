@@ -18,7 +18,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.pnlNoiDung = new System.Windows.Forms.Panel();
             this.statusChinh = new System.Windows.Forms.StatusStrip();
             this.lblGoiY = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblGio = new System.Windows.Forms.ToolStripStatusLabel();
@@ -58,18 +57,12 @@
             this.mnuHeThong = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuThoat = new System.Windows.Forms.ToolStripMenuItem();
             this.timGio = new System.Windows.Forms.Timer(this.components);
+            this.pnlNoiDung = new System.Windows.Forms.Panel();
             this.statusChinh.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.toolChinh.SuspendLayout();
             this.menuChinh.SuspendLayout();
             this.SuspendLayout();
-
-            this.pnlNoiDung.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
-            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNoiDung.Name = "pnlNoiDung";
-            this.pnlNoiDung.Padding = new System.Windows.Forms.Padding(16);
-            this.pnlNoiDung.Size = new System.Drawing.Size(1280, 570);
-            this.pnlNoiDung.TabIndex = 0;
 
             this.statusChinh.BackColor = System.Drawing.Color.FromArgb(50, 52, 77);
             this.statusChinh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -323,6 +316,12 @@
             this.timGio.Interval = 1000;
             this.timGio.Tick += new System.EventHandler(this.timGio_Tick);
 
+            this.pnlNoiDung.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
+            this.pnlNoiDung.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNoiDung.Name = "pnlNoiDung";
+            this.pnlNoiDung.Padding = new System.Windows.Forms.Padding(16);
+            this.pnlNoiDung.TabIndex = 5;
+
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
             this.ClientSize = new System.Drawing.Size(1280, 720);
@@ -350,7 +349,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlNoiDung;
         private System.Windows.Forms.StatusStrip statusChinh;
         private System.Windows.Forms.ToolStripStatusLabel lblGoiY;
         private System.Windows.Forms.ToolStripStatusLabel lblGio;
@@ -390,5 +388,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuHeThong;
         private System.Windows.Forms.ToolStripMenuItem mnuThoat;
         private System.Windows.Forms.Timer timGio;
+        private System.Windows.Forms.Panel pnlNoiDung;
     }
 }

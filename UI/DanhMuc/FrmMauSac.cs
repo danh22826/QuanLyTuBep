@@ -10,6 +10,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmMauSac()
         {
+            PhanQuyen.YeuCau(Quyen.XemDanhMuc);
             InitializeComponent();
             dieuKhien = new BangView<MauSac>(this, new MauSacBll(), CauHinh.MauSac());
         }

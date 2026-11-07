@@ -34,16 +34,19 @@ namespace QuanLyBanTuBep.BLL
 
         public virtual List<T> LayDanhSach()
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Xem"));
             return Dal.LayTatCa();
         }
 
-        public T LayTheoMa(string ma)
+        public virtual T LayTheoMa(string ma)
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Xem"));
             return Dal.TimTheoMa(ma);
         }
 
         public virtual string Them(T x)
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Them"));
             ChuanHoa(x);
             KiemTra(x, true);
             if (Dal.TonTai(Ma(x)))
@@ -54,6 +57,7 @@ namespace QuanLyBanTuBep.BLL
 
         public virtual string Sua(T x)
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Sua"));
             ChuanHoa(x);
             KiemTra(x, false);
             if (Dal.Sua(x) == 0)
@@ -63,11 +67,13 @@ namespace QuanLyBanTuBep.BLL
 
         public void KiemTraXoa(string ma)
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Xoa"));
             KiemTraTruocKhiXoa(ma);
         }
 
         public void Xoa(string ma)
         {
+            PhanQuyen.YeuCau(PhanQuyen.QuyenBang(typeof(T), "Xoa"));
             // CSDL dùng ON DELETE SET NULL / CASCADE nên sẽ không tự chặn: phải kiểm tra tham chiếu ở đây.
             KiemTraTruocKhiXoa(ma);
             Dal.Xoa(ma);

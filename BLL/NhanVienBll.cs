@@ -9,6 +9,7 @@ namespace QuanLyBanTuBep.BLL
     {
         private readonly NhanVienDal dal = new NhanVienDal();
         private readonly CongViecDal congViecDal = new CongViecDal();
+        private readonly TaiKhoanDal taiKhoanDal = new TaiKhoanDal();
 
         protected override BangDal<NhanVien> Dal { get { return dal; } }
         public override string TenDoiTuong { get { return "nhân viên"; } }
@@ -31,6 +32,8 @@ namespace QuanLyBanTuBep.BLL
 
         protected override void KiemTraTruocKhiXoa(string ma)
         {
+            if (taiKhoanDal.CoTaiKhoanNhanVien(ma))
+                throw new NghiepVuException("Nhân viên đang có tài khoản đăng nhập. Hãy khóa tài khoản trước; liên hệ quản trị để xử lý tài khoản rồi mới xóa nhân viên.");
             CamNeuCon(dal.DemHoaDonBan(ma), "hoá đơn bán", ma);
             CamNeuCon(dal.DemHoaDonNhap(ma), "hoá đơn nhập", ma);
         }

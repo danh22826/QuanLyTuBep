@@ -22,7 +22,11 @@ namespace QuanLyBanTuBep.BLL
 
         public IList<LuaChon> DanhSachChonBanHang()
         {
-            return dal.LayDanhSachBanHang().Select(k => new LuaChon(k.MaKhach, k.TenHienThi)).ToList();
+            return dal.LayDanhSachBanHang().Select(k => new LuaChon(
+                k.MaKhach,
+                string.Equals(k.MaKhach, KhachHang.MaKhachLe, StringComparison.OrdinalIgnoreCase)
+                    ? "Khách lẻ"
+                    : k.TenKhach)).ToList();
         }
 
         public KhachHang TaoKhachMoi(KhachHang x)

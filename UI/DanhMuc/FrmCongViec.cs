@@ -10,6 +10,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmCongViec()
         {
+            PhanQuyen.YeuCau(Quyen.QuanLyDanhMuc);
             InitializeComponent();
             dieuKhien = new BangView<CongViec>(this, new CongViecBll(), CauHinh.CongViec());
         }

@@ -28,7 +28,21 @@ namespace QuanLyBanTuBep
                 return;
             }
 
-            Application.Run(new FormMain());
+            while (true)
+            {
+                using (FrmDangNhap dangNhap = new FrmDangNhap())
+                {
+                    if (dangNhap.ShowDialog() != DialogResult.OK) break;
+                }
+
+                using (FormMain main = new FormMain())
+                {
+                    Application.Run(main);
+                    bool dangXuat = main.YeuCauDangXuat;
+                    PhienDangNhap.DangXuat();
+                    if (!dangXuat) break;
+                }
+            }
         }
     }
 }

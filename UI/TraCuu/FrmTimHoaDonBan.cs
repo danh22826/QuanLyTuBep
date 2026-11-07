@@ -10,6 +10,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmTimHoaDonBan()
         {
+            PhanQuyen.YeuCau(Quyen.XemLichSuBan);
             InitializeComponent();
             BaoCaoBll bll = new BaoCaoBll();
             dieuKhien = new ThuTucView<HoaDonBan>(this, CauHinhThuTucs.TimHoaDonBan(bll), bll, p => bll.TimHoaDonBan(p.Chu("MaHang"), p.Ngay("NgayBan"), p.Tien("TongTienTu"), p.Tien("TongTienDen")));

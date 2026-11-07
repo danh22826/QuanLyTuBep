@@ -10,6 +10,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmChatLieu()
         {
+            PhanQuyen.YeuCau(Quyen.XemDanhMuc);
             InitializeComponent();
             dieuKhien = new BangView<ChatLieu>(this, new ChatLieuBll(), CauHinh.ChatLieu());
         }

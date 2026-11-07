@@ -46,7 +46,9 @@ namespace QuanLyBanTuBep.UI
             CauHinhThuTuc c = new CauHinhThuTuc
             {
                 TenFile = "TimKiemSanPham",
-                CotLuoi = new[] { "MaHang", "TenHang", "TenKichThuoc", "TenChatLieu", "TenMau", "TenNuocSX", "SoLuong", "GiaNhap", "DonGiaBan", "ThoiGianBaoHanh", "TrangThai", "GhiChu" }
+                CotLuoi = QuanLyBanTuBep.BLL.PhanQuyen.CoQuyen(QuanLyBanTuBep.BLL.Quyen.XemGiaVon)
+                    ? new[] { "MaHang", "TenHang", "TenKichThuoc", "TenChatLieu", "TenMau", "TenNuocSX", "SoLuong", "GiaNhap", "DonGiaBan", "ThoiGianBaoHanh", "TrangThai", "GhiChu" }
+                    : new[] { "MaHang", "TenHang", "TenKichThuoc", "TenChatLieu", "TenMau", "TenNuocSX", "SoLuong", "DonGiaBan", "ThoiGianBaoHanh", "TrangThai", "GhiChu" }
             };
             c.DsThamSo.Add(new ThamSo { Ten = "MaChatLieu", Nhan = "Chất liệu", Kieu = KieuThamSo.ComboDb, ChoPhepTatCa = true, Nguon = bll.DsChatLieu });
             c.DsThamSo.Add(new ThamSo { Ten = "MaNuocSX", Nhan = "Nước sản xuất", Kieu = KieuThamSo.ComboDb, ChoPhepTatCa = true, Nguon = bll.DsNuocSanXuat });

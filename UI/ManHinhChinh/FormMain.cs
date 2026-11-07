@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using QuanLyBanTuBep.BLL;
 
 namespace QuanLyBanTuBep.UI
 {
@@ -15,12 +16,20 @@ namespace QuanLyBanTuBep.UI
 
         private readonly Dictionary<ToolStripItem, MucMenu> menu = new Dictionary<ToolStripItem, MucMenu>();
         private ToolStripMenuItem dangMo;
+        private Form trangHienTai;
+        private ToolStripMenuItem mnuQuanLyTaiKhoan, mnuDoiMatKhau, mnuDangXuat;
+        public bool YeuCauDangXuat { get; private set; }
 
         public FormMain()
         {
+            PhienDangNhap.YeuCauHieuLuc();
             InitializeComponent();
+            // Host each functional form inside the content panel so it cannot
+            // overlap the shared menu, header, or status bar.
             ToolStripManager.Renderer = new Theme.MenuRenderer();
             DangKyMenu();
+            ThemMenuTaiKhoan();
+            ApDungPhanQuyen();
             timGio_Tick(null, EventArgs.Empty);
 
             MoTrang(mnuTrangChu);
@@ -120,9 +129,18 @@ namespace QuanLyBanTuBep.UI
 
         private void MoTrang(ToolStripItem nguon)
         {
-            MucMenu muc = menu[nguon];
-            if (muc.Item == dangMo) return;
+            MucMenu muc;
+            if (!menu.TryGetValue(nguon, out muc)) return;
+            try { PhanQuyen.YeuCau(QuyenCuaMuc(muc.Item)); }
+            catch (Exception ex)
+            {
+                TienIch.XuLyLoi(ex);
+                return;
+            }
+            if (muc.Item == dangMo && trangHienTai != null && !trangHienTai.IsDisposed) return;
 
+            // Construct the destination before closing the current screen.
+            // This preserves the current screen if its constructor fails.
             Form moi;
             try
             {
@@ -134,20 +152,111 @@ namespace QuanLyBanTuBep.UI
                 return;
             }
 
-            List<Control> cu = new List<Control>();
-            foreach (Control c in pnlNoiDung.Controls) cu.Add(c);
-            foreach (Control c in cu)
+            // Only one functional page is shown at a time.
+            // Close() respects FormClosing cancellation; unlike Dispose(),
+            // it allows a screen to protect unsaved input.
+            if (trangHienTai != null && !trangHienTai.IsDisposed)
             {
-                pnlNoiDung.Controls.Remove(c);
-                c.Dispose();
+                Form cu = trangHienTai;
+                cu.Close();
+                if (!cu.IsDisposed)
+                {
+                    moi.Dispose();
+                    return;
+                }
             }
 
-            TienIch.Nhung(moi, pnlNoiDung);
+            try
+            {
+                moi.TopLevel = false;
+                moi.FormBorderStyle = FormBorderStyle.None;
+                moi.ControlBox = false;
+                moi.MinimizeBox = false;
+                moi.MaximizeBox = false;
+                moi.Dock = DockStyle.Fill;
+                moi.FormClosed += Trang_FormClosed;
+                pnlNoiDung.Controls.Add(moi);
+                trangHienTai = moi;
+                moi.Show();
 
+                if (dangMo != null) DanhDau(dangMo, false);
+                dangMo = muc.Item;
+                DanhDau(dangMo, true);
+                lblTieuDe.Text = muc.TieuDe;
+            }
+            catch (Exception ex)
+            {
+                moi.Dispose();
+                TienIch.XuLyLoi(ex);
+            }
+        }
+
+        private Quyen QuyenCuaMuc(ToolStripMenuItem item)
+        {
+            if (item == mnuTrangChu) return Quyen.XemTrangChu;
+            if (item == mnuBanHang) return Quyen.BanHang;
+            if (item == mnuNhapHang) return Quyen.NhapHang;
+            if (item == mnuHangHoa) return Quyen.QuanLyHangHoa;
+            if (item == mnuNhanVien) return Quyen.QuanLyNhanVien;
+            if (item == mnuKhachHang) return Quyen.QuanLyKhachHang;
+            if (item == mnuNhaCungCap) return Quyen.QuanLyNhaCungCap;
+            if (item == mnuKichThuoc || item == mnuChatLieu || item == mnuMauSac || item == mnuNuocSanXuat) return Quyen.XemDanhMuc;
+            if (item == mnuTimSanPham) return Quyen.TimSanPham;
+            if (item == mnuTimHoaDonBan) return Quyen.XemLichSuBan;
+            return Quyen.BaoCaoDoanhThu;
+        }
+
+        private void ThemMenuTaiKhoan()
+        {
+            mnuQuanLyTaiKhoan = new ToolStripMenuItem("Quản lý tài khoản");
+            mnuDoiMatKhau = new ToolStripMenuItem("Đổi mật khẩu");
+            mnuDangXuat = new ToolStripMenuItem("Đăng xuất");
+            mnuQuanLyTaiKhoan.Click += delegate { MoHopThoaiAnToan(delegate { return new FrmTaiKhoan(); }); };
+            mnuDoiMatKhau.Click += delegate { MoHopThoaiAnToan(delegate { return new FrmDoiMatKhau(); }); };
+            mnuDangXuat.Click += delegate { DangXuat(); };
+            mnuHeThong.DropDownItems.Insert(0, new ToolStripSeparator());
+            mnuHeThong.DropDownItems.Insert(0, mnuDangXuat);
+            mnuHeThong.DropDownItems.Insert(0, mnuDoiMatKhau);
+            mnuHeThong.DropDownItems.Insert(0, mnuQuanLyTaiKhoan);
+        }
+
+        private void ApDungPhanQuyen()
+        {
+            bool admin = PhanQuyen.CoQuyen(Quyen.QuanLyTaiKhoan);
+            mnuNhanVien.Visible = admin; mnuNhaCungCap.Visible = admin; mnuHangHoa.Visible = admin;
+            mnuKichThuoc.Visible = true; mnuChatLieu.Visible = true; mnuMauSac.Visible = true;
+            mnuNuocSanXuat.Visible = true; mnuCongViec.Visible = admin; sepDanhMuc.Visible = admin;
+            mnuNhapHang.Visible = admin; mnuGiaoDich.Visible = admin; mnuBaoCao.Visible = admin;
+            tsNhapHang.Visible = admin; tsHangHoa.Visible = admin; tsBaoCao.Visible = admin;
+            mnuQuanLyTaiKhoan.Visible = admin;
+        }
+
+        private void DangXuat()
+        {
+            if (trangHienTai != null && !trangHienTai.IsDisposed)
+            {
+                Form cu = trangHienTai;
+                cu.Close();
+                if (!cu.IsDisposed) return;
+            }
+            PhienDangNhap.DangXuat();
+            YeuCauDangXuat = true;
+            Close();
+        }
+
+        private void MoHopThoaiAnToan(Func<Form> tao)
+        {
+            try { using (Form f = tao()) f.ShowDialog(this); }
+            catch (Exception ex) { TienIch.XuLyLoi(ex); }
+        }
+
+        private void Trang_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Also handle a child closed independently of navbar navigation.
+            if (ReferenceEquals(trangHienTai, sender)) trangHienTai = null;
             if (dangMo != null) DanhDau(dangMo, false);
-            dangMo = muc.Item;
-            DanhDau(dangMo, true);
-            lblTieuDe.Text = muc.TieuDe;
+            dangMo = null;
+            lblTieuDe.Text = "";
         }
     }
 }

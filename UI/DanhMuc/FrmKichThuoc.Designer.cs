@@ -35,12 +35,20 @@ namespace QuanLyBanTuBep.UI
             this.txtMaKichThuoc = new System.Windows.Forms.TextBox();
             this.lblTenKichThuoc = new System.Windows.Forms.Label();
             this.txtTenKichThuoc = new System.Windows.Forms.TextBox();
+            this.lblChieuDai = new System.Windows.Forms.Label();
+            this.nudChieuDai = new System.Windows.Forms.NumericUpDown();
+            this.lblChieuRong = new System.Windows.Forms.Label();
+            this.nudChieuRong = new System.Windows.Forms.NumericUpDown();
+            this.chkThietKeTheoYeuCau = new System.Windows.Forms.CheckBox();
+            this.lblKichThuocXemTruoc = new System.Windows.Forms.Label();
             this.SuspendLayout();
             this.pnlTim.SuspendLayout();
             this.pnlPhai.SuspendLayout();
             this.pnlNhap.SuspendLayout();
             this.pnlNut.SuspendLayout();
             this.pnlTruong.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChieuDai)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChieuRong)).BeginInit();
 
             this.lv.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.lv.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -102,7 +110,7 @@ namespace QuanLyBanTuBep.UI
 
             this.pnlNhap.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlNhap.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.pnlNhap.Size = new System.Drawing.Size(0, 134);
+            this.pnlNhap.Size = new System.Drawing.Size(0, 188);
             this.pnlNhap.Name = "pnlNhap";
             this.pnlNhap.Controls.Add(this.pnlNut);
             this.pnlNhap.Controls.Add(this.pnlTruong);
@@ -166,12 +174,18 @@ namespace QuanLyBanTuBep.UI
 
             this.pnlTruong.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTruong.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.pnlTruong.Size = new System.Drawing.Size(0, 78);
+            this.pnlTruong.Size = new System.Drawing.Size(0, 132);
             this.pnlTruong.Name = "pnlTruong";
             this.pnlTruong.Controls.Add(this.lblMaKichThuoc);
             this.pnlTruong.Controls.Add(this.txtMaKichThuoc);
             this.pnlTruong.Controls.Add(this.lblTenKichThuoc);
             this.pnlTruong.Controls.Add(this.txtTenKichThuoc);
+            this.pnlTruong.Controls.Add(this.lblChieuDai);
+            this.pnlTruong.Controls.Add(this.nudChieuDai);
+            this.pnlTruong.Controls.Add(this.lblChieuRong);
+            this.pnlTruong.Controls.Add(this.nudChieuRong);
+            this.pnlTruong.Controls.Add(this.chkThietKeTheoYeuCau);
+            this.pnlTruong.Controls.Add(this.lblKichThuocXemTruoc);
 
             this.lblMaKichThuoc.AutoSize = true;
             this.lblMaKichThuoc.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -190,16 +204,54 @@ namespace QuanLyBanTuBep.UI
             this.lblTenKichThuoc.AutoSize = true;
             this.lblTenKichThuoc.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTenKichThuoc.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.lblTenKichThuoc.Location = new System.Drawing.Point(296, 12);
-            this.lblTenKichThuoc.Text = "Tên kích thước *";
+            this.lblTenKichThuoc.Location = new System.Drawing.Point(16, 76);
+            this.lblTenKichThuoc.Text = "Tên kích thước (xem trước)";
             this.lblTenKichThuoc.Name = "lblTenKichThuoc";
 
             this.txtTenKichThuoc.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTenKichThuoc.Location = new System.Drawing.Point(296, 34);
+            this.txtTenKichThuoc.Location = new System.Drawing.Point(16, 96);
             this.txtTenKichThuoc.TabIndex = 1;
-            this.txtTenKichThuoc.Size = new System.Drawing.Size(264, 29);
+            this.txtTenKichThuoc.Size = new System.Drawing.Size(620, 29);
             this.txtTenKichThuoc.MaxLength = 50;
+            this.txtTenKichThuoc.ReadOnly = true;
             this.txtTenKichThuoc.Name = "txtTenKichThuoc";
+
+            this.lblChieuDai.AutoSize = true;
+            this.lblChieuDai.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblChieuDai.Location = new System.Drawing.Point(296, 12);
+            this.lblChieuDai.Text = "Chiều dài (m)";
+            this.lblChieuDai.Name = "lblChieuDai";
+            this.nudChieuDai.DecimalPlaces = 2;
+            this.nudChieuDai.Increment = 0.1M;
+            this.nudChieuDai.Maximum = 1000M;
+            this.nudChieuDai.Location = new System.Drawing.Point(296, 34);
+            this.nudChieuDai.Size = new System.Drawing.Size(150, 29);
+            this.nudChieuDai.Name = "nudChieuDai";
+            this.nudChieuDai.ThousandsSeparator = false;
+
+            this.lblChieuRong.AutoSize = true;
+            this.lblChieuRong.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblChieuRong.Location = new System.Drawing.Point(464, 12);
+            this.lblChieuRong.Text = "Chiều rộng (m)";
+            this.lblChieuRong.Name = "lblChieuRong";
+            this.nudChieuRong.DecimalPlaces = 2;
+            this.nudChieuRong.Increment = 0.1M;
+            this.nudChieuRong.Maximum = 1000M;
+            this.nudChieuRong.Location = new System.Drawing.Point(464, 34);
+            this.nudChieuRong.Size = new System.Drawing.Size(150, 29);
+            this.nudChieuRong.Name = "nudChieuRong";
+            this.nudChieuRong.ThousandsSeparator = false;
+
+            this.chkThietKeTheoYeuCau.AutoSize = true;
+            this.chkThietKeTheoYeuCau.Location = new System.Drawing.Point(640, 36);
+            this.chkThietKeTheoYeuCau.Text = "Thiết kế theo yêu cầu";
+            this.chkThietKeTheoYeuCau.Name = "chkThietKeTheoYeuCau";
+
+            this.lblKichThuocXemTruoc.AutoSize = true;
+            this.lblKichThuocXemTruoc.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.lblKichThuocXemTruoc.Location = new System.Drawing.Point(650, 101);
+            this.lblKichThuocXemTruoc.Text = "Dữ liệu gốc được giữ nguyên khi không phân tích được";
+            this.lblKichThuocXemTruoc.Name = "lblKichThuocXemTruoc";
 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
@@ -213,6 +265,8 @@ namespace QuanLyBanTuBep.UI
             this.Name = "FrmKichThuoc";
             this.pnlTruong.ResumeLayout(false);
             this.pnlTruong.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChieuDai)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudChieuRong)).EndInit();
             this.pnlNut.ResumeLayout(false);
             this.pnlNut.PerformLayout();
             this.pnlNhap.ResumeLayout(false);
@@ -244,6 +298,12 @@ namespace QuanLyBanTuBep.UI
         private System.Windows.Forms.TextBox txtMaKichThuoc;
         private System.Windows.Forms.Label lblTenKichThuoc;
         private System.Windows.Forms.TextBox txtTenKichThuoc;
+        private System.Windows.Forms.Label lblChieuDai;
+        private System.Windows.Forms.NumericUpDown nudChieuDai;
+        private System.Windows.Forms.Label lblChieuRong;
+        private System.Windows.Forms.NumericUpDown nudChieuRong;
+        private System.Windows.Forms.CheckBox chkThietKeTheoYeuCau;
+        private System.Windows.Forms.Label lblKichThuocXemTruoc;
     }
 }
 

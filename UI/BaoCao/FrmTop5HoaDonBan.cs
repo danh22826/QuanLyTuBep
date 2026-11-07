@@ -10,6 +10,7 @@ namespace QuanLyBanTuBep.UI
 
         public FrmTop5HoaDonBan()
         {
+            PhanQuyen.YeuCau(Quyen.BaoCaoDoanhThu);
             InitializeComponent();
             BaoCaoBll bll = new BaoCaoBll();
             dieuKhien = new ThuTucView<HoaDonBan>(this, CauHinhThuTucs.Top5HoaDonBanNhoNhat(), bll, p => bll.Top5HoaDonBanNhoNhat(p.Int("Nam"), p.Int("Quy")));

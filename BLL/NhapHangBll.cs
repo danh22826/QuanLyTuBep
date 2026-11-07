@@ -19,12 +19,14 @@ namespace QuanLyBanTuBep.BLL
 
         public override IList<IHoaDon> DanhSach()
         {
+            PhanQuyen.YeuCau(Quyen.NhapHang);
             return dal.LayTatCa().Cast<IHoaDon>().ToList();
         }
 
         public override IList<LuaChon> DanhSachDoiTac()
         {
-            return nccDal.LayTatCa().Select(n => new LuaChon(n.MaNCC, n.TenHienThi)).ToList();
+            PhanQuyen.YeuCau(Quyen.NhapHang);
+            return nccDal.LayTatCa().Select(n => new LuaChon(n.MaNCC, n.TenNCC)).ToList();
         }
 
         protected override bool TonTai(string so) { return dal.TonTai(so); }

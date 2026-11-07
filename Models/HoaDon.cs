@@ -29,6 +29,7 @@ namespace QuanLyBanTuBep.Models
 
     public class ChiTietHoaDonBan : IChiTietHoaDon
     {
+        private string tenKichThuoc;
         public string SoHDB { get; set; }
 
         [DisplayName("Mã hàng")]
@@ -38,7 +39,11 @@ namespace QuanLyBanTuBep.Models
         public string TenHang { get; set; }
 
         [DisplayName("Kích thước")]
-        public string TenKichThuoc { get; set; }
+        public string TenKichThuoc
+        {
+            get { return tenKichThuoc; }
+            set { tenKichThuoc = KichThuoc.TenHienThiChieuRong(value); }
+        }
 
         [DisplayName("Chất liệu")]
         public string TenChatLieu { get; set; }
@@ -64,6 +69,7 @@ namespace QuanLyBanTuBep.Models
 
     public class ChiTietHoaDonNhap : IChiTietHoaDon
     {
+        private string tenKichThuoc;
         public string SoHDN { get; set; }
 
         [DisplayName("Mã hàng")]
@@ -73,7 +79,11 @@ namespace QuanLyBanTuBep.Models
         public string TenHang { get; set; }
 
         [DisplayName("Kích thước")]
-        public string TenKichThuoc { get; set; }
+        public string TenKichThuoc
+        {
+            get { return tenKichThuoc; }
+            set { tenKichThuoc = KichThuoc.TenHienThiChieuRong(value); }
+        }
 
         [DisplayName("Chất liệu")]
         public string TenChatLieu { get; set; }

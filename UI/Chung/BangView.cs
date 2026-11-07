@@ -28,6 +28,7 @@ namespace QuanLyBanTuBep.UI
         private TextBox txtLocBaoHanh;
         private Label lblDemNgung;
         private bool dangNapBoLoc;
+        private readonly bool chiXem;
 
         private string anhTen = "";
         private string anhNguon;
@@ -45,6 +46,7 @@ namespace QuanLyBanTuBep.UI
             this.form = form;
             this.bll = bll;
             this.cfg = cfg;
+            chiXem = !PhanQuyen.CoQuyen(PhanQuyen.QuyenBang(typeof(T), "Them"));
             this.timKiemTuyChinh = timKiemTuyChinh;
             this.demNgungTuyChinh = demNgungTuyChinh;
 
@@ -79,7 +81,12 @@ namespace QuanLyBanTuBep.UI
             btnLamMoi.Click += delegate { LamMoi(); };
             if (timKiemTuyChinh != null)
                 btnLamMoi.Click += delegate { DatLaiBoLoc(); TaiLuoi(); };
-            btnCsv.Click += delegate { TienIch.XuatCsv(lv, cfg.TenFileCsv); };
+            btnCsv.Click += delegate
+            {
+                if (typeof(T) == typeof(KhachHang)) PhanQuyen.YeuCau(Quyen.XuatKhachHang);
+                TienIch.XuatCsv(lv, cfg.TenFileCsv);
+            };
+            if (typeof(T) == typeof(KhachHang) && !PhanQuyen.CoQuyen(Quyen.XuatKhachHang)) btnCsv.Enabled = false;
             txtTim.TextChanged += delegate { ApDungLoc(); };
             if (timKiemTuyChinh != null)
             {
@@ -458,18 +465,19 @@ namespace QuanLyBanTuBep.UI
         private void DatCheDo(bool sua)
         {
             dangSua = sua;
+            bool coQuyenXoa = PhanQuyen.CoQuyen(PhanQuyen.QuyenBang(typeof(T), "Xoa"));
             foreach (Truong t in cfg.DsTruong)
             {
                 bool khoa = t.ChiDoc || t.TuDongSinh || (sua && (t.KhoaChinh || t.ChiKhiThem));
-                o[t].Enabled = !khoa;
-                if (t.Kieu == KieuTruong.Anh && btnChonAnh != null) btnChonAnh.Enabled = !khoa;
+                o[t].Enabled = !khoa && !chiXem;
+                if (t.Kieu == KieuTruong.Anh && btnChonAnh != null) btnChonAnh.Enabled = !khoa && !chiXem;
             }
             if (cfg.DoiMauChuNutTheoCheDo)
             {
                 // Giữ nút có màu chữ theo trạng thái; các thao tác vẫn được kiểm tra trong hàm xử lý.
-                btnThem.Enabled = true;
-                btnSua.Enabled = true;
-                btnXoa.Enabled = true;
+                btnThem.Enabled = !chiXem;
+                btnSua.Enabled = !chiXem;
+                btnXoa.Enabled = !chiXem && coQuyenXoa;
                 btnLamMoi.Enabled = true;
                 Color mauChu = sua ? Color.Black : Color.White;
                 btnThem.ForeColor = mauChu;
@@ -480,14 +488,14 @@ namespace QuanLyBanTuBep.UI
                 {
                     HangHoa hang = lv.SelectedItems.Count == 0 ? null : lv.SelectedItems[0].Tag as HangHoa;
                     btnXoa.Text = hang != null && hang.NgungKinhDoanh ? "Kinh doanh lại" : "Ngừng kinh doanh";
-                    btnXoa.Enabled = hang != null;
+                    btnXoa.Enabled = hang != null && !chiXem && coQuyenXoa;
                 }
             }
             else
             {
-                btnThem.Enabled = !sua;
-                btnSua.Enabled = sua;
-                btnXoa.Enabled = sua;
+                btnThem.Enabled = !sua && !chiXem;
+                btnSua.Enabled = sua && !chiXem;
+                btnXoa.Enabled = sua && !chiXem && coQuyenXoa;
             }
         }
 

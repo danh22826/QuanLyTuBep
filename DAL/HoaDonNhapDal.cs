@@ -6,7 +6,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.DAL
 {
-    public class HoaDonNhapDal : HoaDonDalBase
+    public class HoaDonNhapDal : HoaDonDalBase, IHoaDonNhapDal
     {
         protected override string Bang { get { return "HoaDonNhap"; } }
         protected override string CotKhoa { get { return "SoHDN"; } }

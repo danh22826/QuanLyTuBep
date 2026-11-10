@@ -3,7 +3,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.DAL
 {
-    public class HangHoaDal : BangDal<HangHoa>
+    public class HangHoaDal : BangDal<HangHoa>, IHangHoaDal
     {
         protected override string Bang { get { return "DMHangHoa"; } }
         protected override string CotKhoa { get { return "MaHang"; } }

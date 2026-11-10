@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using QuanLyBanTuBep.BLL;
+using QuanLyBanTuBep.DAL;
 using QuanLyBanTuBep.UI;
 
 namespace QuanLyBanTuBep
@@ -14,7 +15,7 @@ namespace QuanLyBanTuBep
             Application.SetCompatibleTextRenderingDefault(false);
 
             string loi;
-            if (!KetNoiBll.ThuKetNoi(out loi))
+            if (!Db.ThuKetNoi(out loi))
             {
                 MessageBox.Show(
                     "Không kết nối được cơ sở dữ liệu QuanLyBanTuBep.\n\n" +

@@ -12,11 +12,6 @@ namespace QuanLyBanTuBep.DAL
             "SELECT t.MaTaiKhoan,t.MaNV,n.TenNV,t.TenDangNhap,t.MatKhauHash,t.VaiTro,t.TrangThai,t.NgayTao,t.LanDangNhapCuoi " +
             "FROM dbo.TaiKhoan t JOIN dbo.NhanVien n ON n.MaNV=t.MaNV ";
 
-        public int Dem()
-        {
-            return Convert.ToInt32(Db.Scalar("SELECT COUNT(*) FROM dbo.TaiKhoan"));
-        }
-
         public TaiKhoan TimTheoTenDangNhap(string ten)
         {
             DataTable dt = Db.Query(SqlChon + "WHERE t.TenDangNhap=@ten", Db.P("@ten", ten));
@@ -47,21 +42,6 @@ namespace QuanLyBanTuBep.DAL
         {
             Db.NonQuery("INSERT dbo.TaiKhoan(MaNV,TenDangNhap,MatKhauHash,VaiTro) VALUES(@nv,@ten,@hash,@role)",
                 Db.P("@nv", maNV), Db.P("@ten", ten), Db.P("@hash", hash), Db.P("@role", vaiTro));
-        }
-
-        public void TaoAdminDauTien(string maNV, string ten, string hash)
-        {
-            Db.GiaoDich(delegate(SqlConnection conn, SqlTransaction tran)
-            {
-                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.TaiKhoan WITH (TABLOCKX,HOLDLOCK)", conn, tran))
-                {
-                    if (Convert.ToInt32(cmd.ExecuteScalar()) != 0)
-                        throw new InvalidOperationException("Đã có tài khoản; không thể chạy quy trình khởi tạo ADMIN đầu tiên.");
-                }
-                Db.NonQuery(conn, tran,
-                    "INSERT dbo.TaiKhoan(MaNV,TenDangNhap,MatKhauHash,VaiTro,TrangThai) VALUES(@nv,@ten,@hash,N'ADMIN',1)",
-                    Db.P("@nv", maNV), Db.P("@ten", ten), Db.P("@hash", hash));
-            });
         }
 
         public void CapNhatMatKhau(string ma, string hash)

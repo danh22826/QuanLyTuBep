@@ -4,7 +4,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.BLL
 {
-    public sealed class ThongTinPhien
+    public  class ThongTinPhien
     {
         public string MaTaiKhoan { get; private set; }
         public string MaNV { get; private set; }

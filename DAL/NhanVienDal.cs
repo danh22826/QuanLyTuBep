@@ -2,7 +2,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.DAL
 {
-    public class NhanVienDal : BangDal<NhanVien>
+    public class NhanVienDal : BangDal<NhanVien>, INhanVienDal
     {
         protected override string Bang { get { return "NhanVien"; } }
         protected override string CotKhoa { get { return "MaNV"; } }

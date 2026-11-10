@@ -6,7 +6,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.DAL
 {
-    public abstract class BangDal<T> where T : class, new()
+    public abstract class BangDal<T> : IBangDal<T> where T : class, new()
     {
         protected abstract string Bang { get; }
         protected abstract string CotKhoa { get; }

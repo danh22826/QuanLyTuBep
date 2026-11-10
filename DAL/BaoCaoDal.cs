@@ -3,7 +3,7 @@ using QuanLyBanTuBep.Models;
 
 namespace QuanLyBanTuBep.DAL
 {
-    public class BaoCaoDal
+    public class BaoCaoDal : IBaoCaoDal
     {
         public List<ThongKeSanPham> Top3SanPhamTheoQuy(int nam, int quy)
         {

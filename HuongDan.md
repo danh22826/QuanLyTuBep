@@ -11,8 +11,8 @@ UI (giao diện)  →  BLL (nghiệp vụ)  →  DAL (truy vấn dữ liệu)  �
 
 | Tầng | Thư mục | Trách nhiệm |
 |---|---|---|
-| UI | `UI/` | Hiện dữ liệu, nhận thao tác, hiện thông báo. Chỉ gọi BLL, không biết bảng/cột/SQL, không chứa quy tắc kiểm tra. |
-| BLL | `BLL/` | Quy tắc nghiệp vụ và nội dung thông báo: bắt buộc, độ dài, định dạng, chặn trùng mã, chặn xoá khi còn tham chiếu, tính tiền xem trước, quy tắc hoá đơn. Lỗi ném `NghiepVuException` (kèm tên thuộc tính để UI đưa con trỏ về đúng ô). |
+| GUI | `GUI/` | Hiện dữ liệu, nhận thao tác, hiện thông báo. Chỉ gọi BLL, không biết bảng/cột/SQL, không chứa quy tắc kiểm tra. |
+| BuS | `BuS/` | Quy tắc nghiệp vụ và nội dung thông báo: bắt buộc, độ dài, định dạng, chặn trùng mã, chặn xoá khi còn tham chiếu, tính tiền xem trước, quy tắc hoá đơn. Lỗi ném `NghiepVuException` (kèm tên thuộc tính để UI đưa con trỏ về đúng ô). |
 | DAL | `DAL/` | Câu lệnh SQL, ánh xạ dòng → model, transaction và khoá khi ghi hoá đơn. Chỉ trả dữ liệu / kết quả (`KetQuaGhiHoaDon`), không tạo thông báo. |
 | Db | `DAL/Db.cs` | Kết nối, parameter, transaction ADO.NET. |
 | Models | `Models/` | Mỗi bảng một lớp (`KichThuoc`, `ChatLieu`, `MauSac`, `NuocSanXuat`, `CongViec`, `NhanVien`, `KhachHang`, `NhaCungCap`, `HangHoa`, `HoaDonBan`/`ChiTietHoaDonBan`, `HoaDonNhap`/`ChiTietHoaDonNhap`) cùng vài lớp kết quả báo cáo. `[DisplayName]` là tiêu đề cột lưới. |
